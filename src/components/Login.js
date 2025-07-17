@@ -34,7 +34,7 @@ const Login = () => {
         <input 
           type="password" 
           placeholder="Password" 
-          value={password} 
+          value = {password} 
           onChange={(e) => setPassword(e.target.value)} 
           required 
         />
@@ -44,4 +44,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

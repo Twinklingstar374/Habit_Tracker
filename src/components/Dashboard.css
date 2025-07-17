@@ -1,6 +1,113 @@
 html{
-    background-color: beige;
+    background-color: rgb(0, 0, 0);
 }
 h1 {
     color: rgb(238, 232, 232);
 }
+.layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #000000; /* dark background for glow effect */
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    border-radius: 0 12px 12px 0;
+    overflow: hidden;
+  }
+
+  .sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0; 
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #111b25, #6089b1);
+    box-shadow: 0 0 20px #5489ba, 0 0 30px #7999c6;
+  }
+  .sidebar-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: white;
+  }
+  
+  .sidebar-links {
+    margin-top:80px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-links li {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: color 0.4s;
+    color:aliceblue
+  }
+  
+  .sidebar-links li:hover {
+    color: #579ae1b9;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #040404c0;
+  }
+  /* Dashboard heading and message */
+.motivation {
+    font-size: 1.1rem;
+    margin-top: -15px;
+    margin-bottom: 2rem;
+    color: #aad7ff;
+  }
+  
+  /* Dashboard Card Grid */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* Reusable card */
+  .card {
+    background-color: #111;
+    padding: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(122, 200, 255, 0.15);
+    color: #fff;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  
+  /* Music card */
+  .music-card {
+    background-color: #1a1a1a;
+    text-align: center;
+  }
+  
+  .music-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #3a7bd5;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .music-btn:hover {
+    background-color: #2560a5;
+  }
+  

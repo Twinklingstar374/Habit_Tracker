@@ -1,0 +1,152 @@
+.habit-wrapper {
+    color: white;
+    padding: 2rem;
+  }
+  
+  .add-habit-box {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+  
+  .habit-input, .habit-select {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.6rem;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: white;
+  }
+  
+  .submit-habit-btn {
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    background: #2f5d88;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .habit-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  
+  .habit-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #2f5d88;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .habit-card.inactive {
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+  
+  .card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .card-buttons button {
+    padding: 0.4rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .done-btn {
+    background: #3cb371;
+    color: white;
+  }
+  
+  .delete-btn {
+    background: #c0392b;
+    color: white;
+  }
+  
+  .fail-btn {
+    background: #e67e22;
+    color: white;
+  }
+  
+  .inactive-text {
+    font-style: italic;
+    color: #ccc;
+    margin-top: 0.5rem;
+  }
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 2px solid #2f5d88;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 0 10px rgba(47, 93, 136, 0.3);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .edit-form input,
+  .edit-form select {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    border: 1px solid #444;
+    outline: none;
+  }
+  
+  .edit-form input:focus,
+  .edit-form select:focus {
+    border-color: #2f5d88;
+    box-shadow: 0 0 5px #2f5d88;
+  }
+  
+  .edit-form button {
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .edit-form button:first-of-type {
+    background-color: #2f5d88;
+    color: white;
+  }
+  
+  .edit-form button:last-of-type {
+    background-color: #444;
+    color: white;
+  }
+  
+  .edit-form button:hover {
+    opacity: 0.85;
+  }
+  
+  /* Optional animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

@@ -1,0 +1,180 @@
+.notes-wrapper {
+    padding: 2rem;
+    color: #fff;
+    background-color: #121212;
+    min-height: 100vh;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #00bcd4;
+  }
+  
+  /* Add Note Box */
+  .add-note-box {
+    background: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00bcd4;
+    margin-bottom: 2rem;
+  }
+  
+  .note-input,
+  .note-textarea,
+  .note-select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 1rem;
+  }
+  
+  .note-textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .submit-note-btn {
+    background-color: #00bcd4;
+    color: #000;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+  }
+  
+  .submit-note-btn:hover {
+    background-color: #03a9f4;
+  }
+  
+  /* Notes Display */
+  .note-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .note-card {
+    background-color: #1e1e1e;
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #00bcd4;
+    transition: transform 0.2s ease;
+  }
+  
+  .note-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .note-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .note-card p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+  
+  .category {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+  
+  .delete-btn {
+    background-color: #e53935;
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c62828;
+  }
+  /* Note Cards Layout */
+.note-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  /* Individual Note Card */
+  .note-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
+  }
+  
+  .note-card:hover {
+    box-shadow: 0 0 12px #2f5d88;
+  }
+  
+  /* Inputs for Editing */
+  .note-card input,
+  .note-card textarea,
+  .note-card select {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    border: 1px solid #666;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    resize: vertical;
+  }
+  
+  /* Buttons */
+  .note-card button {
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+  }
+  
+  .note-card .save-btn {
+    background-color: #2f5d88;
+    color: #fff;
+  }
+  
+  .note-card .cancel-btn {
+    background-color: #555;
+    color: #ddd;
+  }
+  
+  .note-card .edit-btn {
+    background-color: #2f5d88;
+    color: white;
+  }
+  
+  .note-card .delete-btn {
+    background-color: #aa2b2b;
+    color: white;
+  }
+  
+  /* Category Tag */
+  .category {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: #aaa;
+  }
+  

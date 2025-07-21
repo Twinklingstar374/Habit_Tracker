@@ -15,6 +15,7 @@ const LandingPage = () => {
 const navigate = useNavigate();
 const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
   
   return (
     

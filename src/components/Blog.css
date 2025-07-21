@@ -81,3 +81,80 @@
     font-size: 20px;
     padding-top: 50px;
 }
+@media (max-width: 1024px) {
+  .stories {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 5rem;
+  }
+
+  .story {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  #blog {
+    padding: 1rem;
+  }
+
+  .underline {
+    font-size: 36px;
+    -webkit-text-stroke: 1px #ffffffb7;
+    letter-spacing: 1.5px;
+  }
+
+  .underline::after {
+    bottom: -5px;
+    height: 2px;
+  }
+
+  .stories {
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .story {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .story h3 {
+    font-size: 1.5rem;
+  }
+
+  .story p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .call {
+    font-size: 16px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .underline {
+    font-size: 28px;
+    -webkit-text-stroke: 0.8px #ffffffb7;
+  }
+
+  .story h3 {
+    font-size: 1.3rem;
+  }
+
+  .story p {
+    font-size: 0.95rem;
+  }
+
+  .call {
+    font-size: 14px;
+    padding-top: 20px;
+  }
+}
+

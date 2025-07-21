@@ -155,3 +155,43 @@
     }
   }
   
+@media screen and (max-width: 768px) {
+  .habit-wrapper {
+    width: 240px;
+    padding: 1rem;
+  }
+  .hel{
+    font-size: 1.3rem;
+  }
+
+  .habit-input, .habit-select {
+    font-size: 0.8rem;
+  }
+
+  .submit-habit-btn {
+    width: 100%;
+  }
+
+  .card-buttons {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .habit-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form {
+    padding: 0.8rem;
+  }
+
+  .edit-form input,
+  .edit-form select {
+    font-size: 0.85rem;
+  }
+
+  .edit-form button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

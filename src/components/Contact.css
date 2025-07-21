@@ -57,4 +57,44 @@
     background-color: #10467658;
     text-shadow: 0 0 10px white, 0 0 16px white;
   }
-  
+  @media (max-width: 768px) {
+  .contact {
+    padding: 60px 15px 80px;
+  }
+
+  .container h2 {
+    font-size: 2rem;
+    letter-spacing: 1.5px;
+  }
+
+  .contact-form {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .contact-form button {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h2 {
+    font-size: 1.7rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 10px;
+  }
+
+  .contact-form button {
+    padding: 8px 14px;
+  }
+}

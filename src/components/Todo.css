@@ -138,3 +138,38 @@
 .card-buttons button:hover {
   background-color: #1e4fa0;
 }
+
+@media (max-width: 768px) {
+  .todo-wrapper {
+    padding: 1rem;
+  }
+
+  .add-task-box {
+    padding: 1rem;
+  }
+
+  .task-card {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .card-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: 0;
+  }
+
+  .task-card::before {
+    font-size: 1.5rem;
+    margin-right: 8px;
+  }
+
+  .task-content h3 {
+    font-size: 1rem;
+  }
+
+  .task-content p {
+    font-size: 0.85rem;
+  }
+}

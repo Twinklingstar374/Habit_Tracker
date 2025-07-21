@@ -3,16 +3,18 @@ import React, { useState, useEffect } from "react";
 import {
   collection,
   addDoc,
-  getDocs,
+  onSnapshot,
   deleteDoc,
   updateDoc,
   doc,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import "./Todo.css";
 
 const Todo = () => {
+  const { currentUser } = useAuth(); // Get the logged-in user
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({
     title: "",
@@ -26,41 +28,51 @@ const Todo = () => {
     deadline: "",
     priority: "Medium",
   });
+   useEffect(() => {
+    const userTodoRef = collection(db, "todos", currentUser.uid, "userTodos");
+    const unsubscribe = onSnapshot(userTodoRef, (snapshot) => {
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTasks(list);
+    });
 
-  const fetchTasks = async () => {
-    const snapshot = await getDocs(collection(db, "todos"));
-    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setTasks(list);
-  };
+    return () => unsubscribe();
+  }, [currentUser]);
+  // 🛑 Prevent crash if user is not loaded yet
+  if (!currentUser) return <p>Loading your tasks...</p>;
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  // 🔄 Real-time Firestore listener for current user's tasks
+ 
 
+  // ➕ Add a new task
   const handleAddTask = async () => {
     if (!newTask.title.trim()) return;
 
-    await addDoc(collection(db, "todos"), {
+    const userTodoRef = collection(db, "todos", currentUser.uid, "userTodos");
+    await addDoc(userTodoRef, {
       ...newTask,
       completed: false,
       createdAt: serverTimestamp(),
     });
 
     setNewTask({ title: "", deadline: "", priority: "Medium" });
-    fetchTasks();
   };
 
+  // ❌ Delete a task
   const handleDeleteTask = async (id) => {
-    await deleteDoc(doc(db, "todos", id));
-    fetchTasks();
+    const ref = doc(db, "todos", currentUser.uid, "userTodos", id);
+    await deleteDoc(ref);
   };
 
+  // ✅ Toggle complete/incomplete
   const handleToggleComplete = async (task) => {
-    const ref = doc(db, "todos", task.id);
+    const ref = doc(db, "todos", currentUser.uid, "userTodos", task.id);
     await updateDoc(ref, { completed: !task.completed });
-    fetchTasks();
   };
 
+  // ✏️ Start editing
   const handleEditTask = (task) => {
     setEditingId(task.id);
     setEditedTask({
@@ -70,12 +82,12 @@ const Todo = () => {
     });
   };
 
+  // 💾 Save edited task
   const saveEditedTask = async () => {
-    const ref = doc(db, "todos", editingId);
+    const ref = doc(db, "todos", currentUser.uid, "userTodos", editingId);
     await updateDoc(ref, { ...editedTask });
     setEditingId(null);
     setEditedTask({ title: "", deadline: "", priority: "Medium" });
-    fetchTasks();
   };
 
   return (
@@ -83,28 +95,37 @@ const Todo = () => {
       <h2>📋 To-Do List</h2>
 
       <div className="add-task-box">
+        <label htmlFor="taskTitle">Task Title</label>
         <input
+          id="taskTitle"
           type="text"
-          placeholder="Task title"
+          placeholder="e.g., Study React Hooks"
           value={newTask.title}
           onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
           className="task-input"
         />
+
+        <label htmlFor="deadline">Deadline</label>
         <input
+          id="deadline"
           type="date"
           value={newTask.deadline}
           onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
           className="task-input"
         />
+
+        <label htmlFor="priority">Priority</label>
         <select
+          id="priority"
           value={newTask.priority}
           onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
           className="task-select"
         >
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
+          <option value="High">🔥 High</option>
+          <option value="Medium">🌤 Medium</option>
+          <option value="Low">🍃 Low</option>
         </select>
+
         <button className="submit-task-btn" onClick={handleAddTask}>
           ➕ Add Task
         </button>
@@ -129,18 +150,24 @@ const Todo = () => {
                   type="date"
                   value={editedTask.deadline}
                   onChange={(e) =>
-                    setEditedTask({ ...editedTask, deadline: e.target.value })
+                    setEditedTask({
+                      ...editedTask,
+                      deadline: e.target.value,
+                    })
                   }
                 />
                 <select
                   value={editedTask.priority}
                   onChange={(e) =>
-                    setEditedTask({ ...editedTask, priority: e.target.value })
+                    setEditedTask({
+                      ...editedTask,
+                      priority: e.target.value,
+                    })
                   }
                 >
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
+                  <option value="High">🔥 High</option>
+                  <option value="Medium">🌤 Medium</option>
+                  <option value="Low">🍃 Low</option>
                 </select>
                 <div className="card-buttons">
                   <button onClick={saveEditedTask}>💾 Save</button>
@@ -156,10 +183,14 @@ const Todo = () => {
                 </div>
                 <div className="card-buttons">
                   <button onClick={() => handleToggleComplete(task)}>
-                    {task.completed ? "✅ Mark Incomplete" : "✅ Mark Complete"}
+                    {task.completed
+                      ? "↩️ Mark Incomplete"
+                      : "✅ Mark Complete"}
                   </button>
                   <button onClick={() => handleEditTask(task)}>🖊 Edit</button>
-                  <button onClick={() => handleDeleteTask(task.id)}>🗑 Delete</button>
+                  <button onClick={() => handleDeleteTask(task.id)}>
+                    🗑 Delete
+                  </button>
                 </div>
               </>
             )}

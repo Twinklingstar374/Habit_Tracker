@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
 import {
   collection,
   addDoc,
-  getDocs,
+  onSnapshot,
   deleteDoc,
   doc,
   updateDoc,
+  serverTimestamp,
 } from "firebase/firestore";
+import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import "./Habits.css";
 
 const Habits = () => {
+  const { currentUser } = useAuth();
   const [habits, setHabits] = useState([]);
   const [newHabit, setNewHabit] = useState({
     name: "",
@@ -29,22 +32,34 @@ const Habits = () => {
 
   const [showDonePopup, setShowDonePopup] = useState(false);
 
-  const fetchHabits = async () => {
-    const snapshot = await getDocs(collection(db, "habits"));
-    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setHabits(list);
-  };
-
+  // 🟡 1. Real-time fetch habits for logged-in user
   useEffect(() => {
-    fetchHabits();
-  }, []);
+    if (!currentUser) return;
 
+    const userHabitRef = collection(db, "habits", currentUser.uid, "userHabits");
+
+    const unsubscribe = onSnapshot(userHabitRef, (snapshot) => {
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setHabits(list);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  // 🟡 2. Add new habit with initial streak values
   const handleAddHabit = async () => {
     if (!newHabit.name.trim()) return;
 
-    await addDoc(collection(db, "habits"), {
+    const userHabitRef = collection(db, "habits", currentUser.uid, "userHabits");
+
+    await addDoc(userHabitRef, {
       ...newHabit,
-      createdAt: new Date().toISOString(),
+      createdAt: serverTimestamp(),
+      streak: 0,
+      lastMarkedDate: "", // track when last marked
     });
 
     setNewHabit({
@@ -54,21 +69,21 @@ const Habits = () => {
       frequency: "daily",
       status: "active",
     });
-
-    fetchHabits();
   };
 
+  // 🟡 3. Delete habit
   const handleDeleteHabit = async (id) => {
-    await deleteDoc(doc(db, "habits", id));
-    fetchHabits();
+    const ref = doc(db, "habits", currentUser.uid, "userHabits", id);
+    await deleteDoc(ref);
   };
 
+  // 🟡 4. Mark habit as failed
   const handleFailHabit = async (id) => {
-    const ref = doc(db, "habits", id);
+    const ref = doc(db, "habits", currentUser.uid, "userHabits", id);
     await updateDoc(ref, { status: "inactive" });
-    fetchHabits();
   };
 
+  // 🟡 5. Edit habit info
   const handleEditHabit = (habit) => {
     setEditingId(habit.id);
     setEditedHabit({
@@ -78,27 +93,43 @@ const Habits = () => {
     });
   };
 
+  // 🟡 6. Save edited habit
   const saveEditedHabit = async () => {
-    const ref = doc(db, "habits", editingId);
+    const ref = doc(db, "habits", currentUser.uid, "userHabits", editingId);
     await updateDoc(ref, {
-      name: editedHabit.name,
-      goal: editedHabit.goal,
-      frequency: editedHabit.frequency,
+      ...editedHabit,
     });
 
     setEditingId(null);
     setEditedHabit({ name: "", goal: "", frequency: "daily" });
-    fetchHabits();
   };
 
-  const handleDoneHabit = () => {
+  // ✅ 7. Mark as done for today (streak +1 if not done today)
+  const handleDoneHabit = async (habitId, currentStreak, lastMarkedDate) => {
+    const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+
+    if (today === lastMarkedDate) {
+      setShowDonePopup(true); // already done today
+      setTimeout(() => setShowDonePopup(false), 2000);
+      return;
+    }
+
+    const ref = doc(db, "habits", currentUser.uid, "userHabits", habitId);
+
+    await updateDoc(ref, {
+      streak: currentStreak + 1,
+      lastMarkedDate: today,
+    });
+
     setShowDonePopup(true);
     setTimeout(() => setShowDonePopup(false), 2000);
   };
 
+  if (!currentUser) return <p>Loading your habits...</p>;
+
   return (
     <div className="habit-wrapper">
-      <h2>🧠 Habit Tracker</h2>
+      <h2 className="hel">🧠 Habit Tracker</h2>
 
       {showDonePopup && (
         <div className="popup-success">✅ Habit marked as done for today!</div>
@@ -193,10 +224,20 @@ const Habits = () => {
                 <p>🎯 {habit.goal}</p>
                 <p>📅 Start: {habit.startDate}</p>
                 <p>🔁 Frequency: {habit.frequency}</p>
+                <p>🔥 Streak: {habit.streak || 0} day(s)</p>
 
                 {habit.status === "active" && (
                   <div className="card-buttons">
-                    <button className="done-btn" onClick={handleDoneHabit}>
+                    <button
+                      className="done-btn"
+                      onClick={() =>
+                        handleDoneHabit(
+                          habit.id,
+                          habit.streak || 0,
+                          habit.lastMarkedDate || ""
+                        )
+                      }
+                    >
                       ✅ Done for Today
                     </button>
                     <button

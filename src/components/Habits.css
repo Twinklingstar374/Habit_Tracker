@@ -2,6 +2,9 @@
     color: white;
     padding: 2rem;
   }
+  .hel{
+    color: #115f81;
+  }
   
   .add-habit-box {
     background: rgba(255, 255, 255, 0.08);
@@ -50,12 +53,14 @@
     text-decoration: line-through;
   }
   
-  .card-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
+.card-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
   
   .card-buttons button {
     padding: 0.4rem;

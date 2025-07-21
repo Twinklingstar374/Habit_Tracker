@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import {
   collection,
   addDoc,
-  getDocs,
   deleteDoc,
   doc,
   updateDoc,
+  onSnapshot,
+  query,
+  where,
   serverTimestamp,
 } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import "./Notes.css";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
+  const [userId, setUserId] = useState(null);
+
   const [newNote, setNewNote] = useState({
     title: "",
     content: "",
@@ -26,31 +31,48 @@ const Notes = () => {
     category: "General",
   });
 
-  const fetchNotes = async () => {
-    const snapshot = await getDocs(collection(db, "notes"));
-    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setNotes(list);
-  };
-
+  // 🔐 Check user login
   useEffect(() => {
-    fetchNotes();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return () => unsubscribe();
   }, []);
+
+  // 🔄 Real-time fetch
+  useEffect(() => {
+    if (!userId) return;
+
+    const notesRef = collection(db, "notes");
+    const q = query(notesRef, where("userId", "==", userId));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNotes(list);
+    });
+
+    return () => unsubscribe();
+  }, [userId]);
 
   const handleAddNote = async () => {
     if (!newNote.title.trim() || !newNote.content.trim()) return;
 
     await addDoc(collection(db, "notes"), {
       ...newNote,
+      userId: userId,
       createdAt: serverTimestamp(),
     });
 
     setNewNote({ title: "", content: "", category: "General" });
-    fetchNotes();
   };
 
   const handleDeleteNote = async (id) => {
     await deleteDoc(doc(db, "notes", id));
-    fetchNotes();
   };
 
   const handleEditNote = (note) => {
@@ -68,7 +90,6 @@ const Notes = () => {
     });
     setEditingNoteId(null);
     setEditedNote({ title: "", content: "", category: "General" });
-    fetchNotes();
   };
 
   return (
@@ -167,4 +188,3 @@ const Notes = () => {
 };
 
 export default Notes;
-

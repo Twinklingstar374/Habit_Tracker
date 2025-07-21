@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { auth, db } from "../firebase";
 import Habits from "./Habits";
 import Notes from "./Notes";
 import Todo from "./Todo";
@@ -10,13 +16,58 @@ import "./Dashboard.css";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [tab, onTabChange] = useState("home");
+  const [userId, setUserId] = useState(null);
+  const [todoStats, setTodoStats] = useState({ total: 0, completed: 0 });
+  const [latestNote, setLatestNote] = useState("");
+  const [latestHabit, setLatestHabit] = useState({ name: "", streak: 0 });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) navigate("/login");
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        navigate("/login");
+      } else {
+        setUserId(user.uid);
+      }
     });
     return () => unsubscribe();
   }, [navigate]);
+
+  useEffect(() => {
+    if (!userId) return;
+    fetchTodoStats();
+    fetchLatestNote();
+    fetchLatestHabit();
+  }, [userId]);
+
+  const fetchTodoStats = async () => {
+    const q = query(collection(db, "todos"), where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+    let total = 0;
+    let completed = 0;
+    snapshot.forEach((doc) => {
+      total++;
+      if (doc.data().completed) completed++;
+    });
+    setTodoStats({ total, completed });
+  };
+
+  const fetchLatestNote = async () => {
+    const q = query(collection(db, "notes"), where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      const sorted = snapshot.docs.sort((a, b) => b.data().createdAt?.seconds - a.data().createdAt?.seconds);
+      setLatestNote(sorted[0].data().title || "Untitled Note");
+    }
+  };
+
+  const fetchLatestHabit = async () => {
+    const q = query(collection(db, "habits"), where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      const doc = snapshot.docs[0]; // Simplified: assuming sorted by date
+      setLatestHabit({ name: doc.data().name, streak: doc.data().streak || 0 });
+    }
+  };
 
   return (
     <div className="layout">
@@ -42,24 +93,19 @@ const Dashboard = () => {
             <div className="dashboard-grid">
               <div className="card streaks-card">
                 <h3>🔥 Current Streak</h3>
-                <p>3 Days Continuous</p>
+                <p>{latestHabit.name} — {latestHabit.streak} Day Streak</p>
               </div>
 
               <div className="card todo-card">
                 <h3>📋 To-Do Summary</h3>
-                <p>5 Tasks Total</p>
-                <p>2 Completed</p>
-                <p>3 Pending</p>
+                <p>{todoStats.total} Tasks Total</p>
+                <p>{todoStats.completed} Completed</p>
+                <p>{todoStats.total - todoStats.completed} Pending</p>
               </div>
 
               <div className="card notes-card">
                 <h3>📝 Notes</h3>
-                <p>Latest: “Focus Goals for July”</p>
-              </div>
-
-              <div className="card habits-card">
-                <h3>✅ Recent Habit</h3>
-                <p>Meditation — 2 Day Streak</p>
+                <p>Latest: “{latestNote}”</p>
               </div>
 
               <div className="card music-card">

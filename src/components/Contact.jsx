@@ -3,8 +3,8 @@ import './Contact.css';
 
 function Contact() {
   return (
-    <section className="contact-section">
-      <div className="contact-container">
+    <section className="contact">
+      <div className="container">
         <h2>Let’s Connect</h2>
         <p>
           Have a suggestion, idea, or just want to say hello? We’d love to hear from you.

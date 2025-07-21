@@ -1,11 +1,10 @@
-.contact-section {
-    background-color: black;
+.contact{
     padding: 80px 20px 100px;
     text-align: center;
     color: #f0f0f0;
   }
   
-  .contact-container h2 {
+  .container h2 {
     font-size: 3rem;
     margin-bottom: 10px;
     color: transparent;
@@ -15,12 +14,7 @@
     margin-bottom: 30px;
   }
   
-  .contact-subtitle {
-    color: rgba(200, 220, 255, 0.7);
-    margin-bottom: 40px;
-    font-size: 1.2rem;
-  }
-  
+ 
   .contact-form {
     display: flex;
     flex-direction: column;
@@ -29,29 +23,15 @@
     margin: 0 auto;
   }
   
-  .contact-form input,
-  .contact-form textarea {
-    padding: 15px;
-    background-color: #111;
-    /* border: 1px solid #2a89dc; */
-    color: #fff;
-    border-radius: 10px;
-    font-size: 1rem;
-    outline: none;
-    box-shadow: 0 0 10px #2a89dc30;
-  }
   
   .contact-form input,
 .contact-form textarea {
   padding: 15px;
-  background-color: transparent; /* ← Transparent background */
-  /* border: 1.5px solid #2a89dc; */
+  background-color: transparent; 
   color: #ffffff;
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  backdrop-filter: blur(2px); /* Optional for slight glass effect */
-  /* box-shadow: 0 0 12px #2a89dc30; */
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
@@ -61,12 +41,6 @@
   box-shadow: 0 0 20px #2a89dc80;
 }
 
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-  
   .contact-form button {
     padding: 12px 20px;
     background-color: transparent;

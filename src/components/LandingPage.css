@@ -1,6 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
     scroll-behavior: smooth;
-    background-color: black;
+    /* background-color: black; */
+     max-width: 100%;
+  overflow-x: hidden;
+}
+body{
+   max-width: 100%;
+  overflow-x: hidden;
 }
 
 
@@ -45,78 +55,47 @@ html {
     width: 100%;
 }
 
-/* Navbar */
 .navbar {
-    position: fixed;
-    width: 100%;
-    padding: 20px 40px;
-    margin-left: 35px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;  
-    z-index: 2000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+  background: transparent;
+  box-sizing: border-box;
 }
 
 .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #2f5d88;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #8ab4f8;
 }
 
-/* Center nav links */
+/* Links and Buttons for desktop */
 .links {
-    display: flex;
-    gap: 35px;
-    padding:15px 25px;
-    border-radius: 30px;
-    backdrop-filter: blur(1px);
-    box-shadow: inset 0 0 10px hsl(207, 36%, 51%),0 0 20px #2a89dc;
-    /* box-shadow: 0 0 20px #2a89dc */
+  display: flex;
+  gap: 25px;
+  padding:15px 25px;
+  border-radius: 30px;
+  backdrop-filter: blur(1px);
+  box-shadow: inset 0 0 10px hsl(207, 36%, 51%),0 0 20px #2a89dc;
 }
 
 .link {
-    /* color: #ffffffb0; */
-    text-decoration: none;
-    font-size: 1.1rem;
-    position: relative;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.4s ease;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
-.link:hover {
-    color: white;
-    text-shadow: 0 0 8px white, 0 0 16px white;
+.buttons {
+  display: flex;
+  gap: 10px;
 }
 
-
-.link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background-color: #2a5b89d4;
-    left: 0;
-    bottom: -5px;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 6px #4ea4f3, 0 0 12px #4ea4f3;
-}
-
-.link:hover::after {
-    width: 100%;
-}
-
-
-/* Login / Signup buttons */
-.buttons{
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    margin-right: 70px;
-    gap: 30px;
-
-
-}
- .btn {
+.btn {
     padding: 8px 22px;
     border: 1.5px solid #294d6d;
     /* box-shadow:; */
@@ -127,7 +106,6 @@ html {
     font-size: 1rem;
     box-shadow: inset 0 0 10px hsl(207, 36%, 51%),0 0 10px #11324e86;
     backdrop-filter:  blur(2px);
-    /* transition: 0.3s; */
 }
 
 .btn:hover {
@@ -136,6 +114,23 @@ html {
     text-shadow: 0 0 8px white, 0 0 16px white;
     background-color: #10467658;
 }
+
+/* ========== HAMBURGER MENU ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 10001;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
 
 
 .hero {
@@ -173,7 +168,6 @@ html {
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s ease;
-    /* border:1px solid #0d2d49;; */
     z-index: 5;
     border: none;
     box-shadow: inset 0 0 20px hsl(207, 36%, 51%), 0 0 20px #2a89dc;
@@ -181,7 +175,6 @@ html {
 
 .hero .btn:hover {
     color: rgb(197, 209, 214);
-    /* box-shadow: 0 0 30px #0d2d49; */
     text-shadow: 0 0 10px white, 0 0 16px white;
 }
 
@@ -205,14 +198,13 @@ html {
     overflow: hidden;
 }
 
-
-.todocontent {
+.content-left {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1.5px solid #2f5d88;
-    width: 350px;
-    height: 300px;
+    width: 360px;
+    height: 360px;
     border-radius: 20px;
     box-shadow: 0 0 20px #2f5d88, 0 0 40px #2f5d88;
     padding: 50px;
@@ -220,15 +212,50 @@ html {
     text-align: center;
     margin-left: 60px;
 }
-.todocontent {
+.content-left {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-
-.todocontent:hover {
+.content-left:hover {
     transform: scale(1.05) rotateX(3deg);
     box-shadow: 0 0 25px #2f5d88, 0 0 50px #2f5d88;
     border-color: #4ea4f3;
 }
+
+
+.content-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid #2f5d88;
+    width: 360px;
+    height: 360px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #2f5d88, 0 0 40px #2f5d88;
+    padding: 50px;
+    color: white;
+    text-align: center;
+    margin-left: 200px;
+}
+.content-right {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.content-right:hover {
+    transform: scale(1.05) rotateX(3deg);
+    box-shadow: 0 0 25px #2f5d88, 0 0 50px #2f5d88;
+    border-color: #4ea4f3;
+}
+.glow-box h2{
+  font-size: 25px;
+  color: #7ea8db;
+}
+.glow-box h1{
+  font-size: 15px;
+  color: #2f5d88;
+}
+.glow-box p{
+  color: #f7f7f7;
+}
+
 
 
 .myimage {
@@ -241,18 +268,16 @@ html {
 }
 
 .myimage img {
-    width: 300px;
+    width: 350px;
     height: auto;
     object-fit: contain;
-
-    
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
 }
+
 .calender{
     width:500px;
 }
-
 
 
 /* about Section */
@@ -282,7 +307,6 @@ html {
 }
 
 .second-video1::before {
-    
     height: 50%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 8.5) 100%);
 }
@@ -354,14 +378,13 @@ html {
 
 
 
+/* {footeer} */
 
-.footer-inner {
+.footerin{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px;
-    max-width: 1100px;
-    margin: 0 auto;
+    gap: 90px;
     padding: 30px 40px;
   }
   
@@ -389,58 +412,24 @@ html {
     color: #4ea4f3;
     text-shadow: 0 0 8px #4ea4f3;
   }
-  
-  .social-links a {
-    margin-right: 15px;
-    font-weight: 600;
-    font-size: 1rem;
-    display: inline-block;
-    transition: color 0.3s ease;
-  }
-  
-  .social-links a:hover {
-    color: #2a89dc;
-    text-shadow: 0 0 10px #2a89dc;
-  }
-  
-  .footer-bottom {
-    border-top: 1px solid rgba(42, 137, 220, 0.3);
-    padding: 15px 40px;
-    text-align: center;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-    user-select: none;
-  }
+
   .newsletter p {
-    margin-bottom: 15px;
     color: rgba(255, 255, 255, 0.6);
   }
   
   .newsletter-form {
     display: flex;
-    gap: 10px;
-    max-width: 320px;
+    gap: 14px;
   }
   
   .newsletter-input {
-    flex: 1;
     padding: 10px 15px;
     border-radius: 6px;
     border: 1.5px solid #2a89dc;
     background-color: transparent;
-    color: #eaeaea;
+    /* color: #eaeaea; */
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .newsletter-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .newsletter-input:focus {
-    border-color: #4ea4f3;
-    box-shadow: 0 0 8px #4ea4f3;
   }
   
   .newsletter-button {
@@ -462,3 +451,231 @@ html {
     box-shadow: 0 0 12px #4ea4f3;
   }
   
+  .social a {
+    margin-right: 15px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .social a:hover {
+    color: #2a89dc; }
+  
+  .bottom {
+    border-top: 1px solid rgba(42, 137, 220, 0.3);
+    padding: 15px 40px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* ------------------- Responsive Styles ------------------- */
+
+/* ===============================
+   🔁 REFINED MEDIA QUERIES BELOW
+================================= */
+
+/* Responsive navbar for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+      padding: 12px 16px;
+    }
+  
+    .logo {
+      font-size: 1.5rem;
+    }
+  
+      .links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px 0;
+    gap: 20px;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    /* gap: 35px; */
+    /* padding:15px 25px; */
+    border-radius: 30px;
+    backdrop-filter: blur(1px);
+    box-shadow: inset 0 0 10px hsl(207, 36%, 51%),0 0 20px #2a89dc;
+  }
+
+     .hamburger {
+    display: flex;
+  }
+
+    .links.show {
+    display: flex;
+  }
+
+  .buttons {
+    display: none;
+  }
+  
+    /* .link {
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+  
+  
+    .btn {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    } */
+  }
+  
+  @media (max-width: 430px) {
+    .logo {
+      font-size: 1.3rem;
+    }
+  
+    .links {
+      gap: 10px;
+      padding: 4px 10px;
+      max-width: 95%;
+    }
+  
+    .link {
+      font-size: 0.78rem;
+    }
+  
+    .btn {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+  }
+  
+
+  /* === Background Video on Mobile === */
+   @media (max-width: 768px) {
+    .landing {
+      height: 50vh;
+    }
+  
+    .bgvideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+  } 
+  
+  /* === Hero Section (Shrunk text, spacing) === */
+ @media (max-width: 768px) {
+    .hero {
+      padding-top: 15rem;
+      text-align: center;
+    }
+  
+    .hero h1 {
+      font-size: 2.2rem;
+      -webkit-text-stroke: 1px #f7f7f7;
+    }
+  
+    .hero p {
+      font-size: 1.1rem;
+      margin-top: 0.8rem;
+      line-height: normal;
+    }
+  
+    .hero .btn {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* === Feature Section on Mobile (Horizontal but spaced) === */
+   /* @media (max-width: 768px) {
+    .spacer-section {
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 2rem 1rem;
+      justify-content: center;
+      gap: 2rem;
+    }
+  
+    .content-left,
+    .content-right {
+      width: 90%;
+      max-width: 320px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #2f5d88;
+    }
+   } */
+    
+    /* .content-right::after {
+      content: "";
+      display: block;
+      height: 1px;
+      margin: 2rem auto 0;
+      width: 80%;
+      background-color: rgba(255,255,255,0.2);
+    }
+  
+    .myimage img {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+  }
+   
+
+  /* === About Video & Overlay Text (Center aligned) === */
+  /* @media (max-width: 768px) {
+    .second-video1 {
+      height: 60vh;
+    }
+  
+    .second-video {
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .about-overlay {
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1rem;
+      width: 90%;
+    }
+  
+    .about-overlay h1 {
+      font-size: 2rem;
+      -webkit-text-stroke: 1px #fff;
+    }
+  
+    .about-overlay p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+    }
+  } */
+  
+  /* === Footer Section Stacking for Mobile === */
+  /* @media (max-width: 768px) {
+    .footerin {
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem 1rem;
+    }
+  
+    .newsletter-form {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+  
+    .newsletter-input,
+    .newsletter-button {
+      width: 100%;
+    }
+  
+    .bottom {
+      font-size: 0.8rem;
+      padding: 1rem;
+      text-align: center;
+    }
+  } */

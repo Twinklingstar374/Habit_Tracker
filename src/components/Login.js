@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase';
 import { useNavigate } from "react-router-dom";
+import './Login.css';
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,8 +23,13 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-form">
+    <div className="page">
+    <div className="form">
+       <h1 className="heading">Welcome back to TrackX !!</h1>
+      
+      
       <h2>Login</h2>
+      
       <form onSubmit={handleLogin}>
         <input 
           type="email" 
@@ -40,6 +47,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+    </div>
     </div>
   );
 };

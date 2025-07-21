@@ -1,4 +1,4 @@
-/* Blog Section */
+
 #blog {
     padding: 1.2rem 3rem;
     background-color: rgba(0, 0, 0, 0.7); 
@@ -41,14 +41,11 @@
     }
   }
   
-
-
 .stories {
     display: flex;
     gap: 5rem;
     margin-top: 10rem;
 }
-
 
 
 .story {
@@ -58,14 +55,6 @@
     padding: 2rem;
     box-shadow: 0 0 20px #2f5d88, 0 0 40px #2f5d88;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.story-photo {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 8px rgba(0,0,0,0.3);
 }
 
 

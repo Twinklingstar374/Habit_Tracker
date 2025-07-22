@@ -11,7 +11,7 @@
     color: #00bcd4;
   }
   
-  /* Add Note Box */
+
   .add-note-box {
     background: #1e1e1e;
     padding: 1.5rem;
@@ -50,7 +50,7 @@
   }
   
   .submit-note-btn:hover {
-    background-color: #03a9f4;
+    background-color: #093e6d;
   }
   
   /* Notes Display */
@@ -125,7 +125,7 @@
     box-shadow: 0 0 12px #2f5d88;
   }
   
-  /* Inputs for Editing */
+
   .note-card input,
   .note-card textarea,
   .note-card select {
@@ -170,8 +170,7 @@
     background-color: #aa2b2b;
     color: white;
   }
-  
-  /* Category Tag */
+
   .category {
     font-size: 0.85rem;
     margin-top: 0.5rem;

@@ -14,7 +14,7 @@ import { useAuth } from "../context/AuthContext";
 import "./Todo.css";
 
 const Todo = () => {
-  const { currentUser } = useAuth(); // Get the logged-in user
+  const { currentUser } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({
     title: "",
@@ -28,7 +28,8 @@ const Todo = () => {
     deadline: "",
     priority: "Medium",
   });
-   useEffect(() => {
+
+  useEffect(() => {
     const userTodoRef = collection(db, "todos", currentUser.uid, "userTodos");
     const unsubscribe = onSnapshot(userTodoRef, (snapshot) => {
       const list = snapshot.docs.map((doc) => ({
@@ -40,13 +41,14 @@ const Todo = () => {
 
     return () => unsubscribe();
   }, [currentUser]);
-  // 🛑 Prevent crash if user is not loaded yet
+
+
   if (!currentUser) return <p>Loading your tasks...</p>;
 
-  // 🔄 Real-time Firestore listener for current user's tasks
+  
  
 
-  // ➕ Add a new task
+  
   const handleAddTask = async () => {
     if (!newTask.title.trim()) return;
 
@@ -60,19 +62,19 @@ const Todo = () => {
     setNewTask({ title: "", deadline: "", priority: "Medium" });
   };
 
-  // ❌ Delete a task
+
   const handleDeleteTask = async (id) => {
     const ref = doc(db, "todos", currentUser.uid, "userTodos", id);
     await deleteDoc(ref);
   };
 
-  // ✅ Toggle complete/incomplete
+
   const handleToggleComplete = async (task) => {
     const ref = doc(db, "todos", currentUser.uid, "userTodos", task.id);
     await updateDoc(ref, { completed: !task.completed });
   };
 
-  // ✏️ Start editing
+
   const handleEditTask = (task) => {
     setEditingId(task.id);
     setEditedTask({
@@ -82,7 +84,7 @@ const Todo = () => {
     });
   };
 
-  // 💾 Save edited task
+
   const saveEditedTask = async () => {
     const ref = doc(db, "todos", currentUser.uid, "userTodos", editingId);
     await updateDoc(ref, { ...editedTask });

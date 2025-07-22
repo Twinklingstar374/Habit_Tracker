@@ -12,6 +12,7 @@ import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import "./Habits.css";
 
+
 const Habits = () => {
   const { currentUser } = useAuth();
   const [habits, setHabits] = useState([]);

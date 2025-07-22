@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [latestNote, setLatestNote] = useState("");
   const [habitList, setHabitList] = useState([]);
 
-  // ✅ Auth check
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -33,7 +33,7 @@ const Dashboard = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  // ✅ Main data fetch
+
   useEffect(() => {
     if (!userId) return;
 
@@ -49,10 +49,10 @@ const Dashboard = () => {
       setTodoStats({ total, completed });
     });
 
-    // --- Realtime Habits ---
+  
     const unsubscribeHabit = listenToAllHabits(userId);
 
-    // --- Realtime Notes ---
+   
     const unsubscribeNote = listenToLatestNote(userId);
 
     return () => {
@@ -62,7 +62,7 @@ const Dashboard = () => {
     };
   }, [userId]);
 
-  // ✅ Real-time Notes fetch
+  
   const listenToLatestNote = (uid) => {
     const notesRef = collection(db, "notes");
     const q = query(notesRef, where("userId", "==", uid));
@@ -85,7 +85,6 @@ const Dashboard = () => {
     return unsubscribe;
   };
 
-  // ✅ Real-time Habit Streak fetch (all habits)
   const listenToAllHabits = (uid) => {
     const habitsRef = collection(db, "habits", uid, "userHabits");
 
@@ -110,7 +109,6 @@ const Dashboard = () => {
           <li onClick={() => onTabChange("habits")}>✅ Habits</li>
           <li onClick={() => onTabChange("notes")}>📝 Notes</li>
           <li onClick={() => onTabChange("todo")}>📋 To-Do</li>
-          <li onClick={() => onTabChange("music")}>🎧 Focus Music</li>
         </ul>
       </div>
 
@@ -124,7 +122,7 @@ const Dashboard = () => {
             </p>
 
             <div className="dashboard-grid">
-              {/* 🔥 Streak Card */}
+             
               <div className="card streaks-card">
                 <h3>🔥 Habit Streaks</h3>
                 {habitList.length === 0 ? (
@@ -138,7 +136,7 @@ const Dashboard = () => {
                 )}
               </div>
 
-              {/* 📋 To-Do Card */}
+              
               <div className="card todo-card">
                 <h3>📋 To-Do Summary</h3>
                 <p>{todoStats.total} Tasks Total</p>
@@ -146,18 +144,13 @@ const Dashboard = () => {
                 <p>{todoStats.total - todoStats.completed} Pending</p>
               </div>
 
-              {/* 📝 Notes Card */}
+ 
               <div className="card notes-card">
                 <h3>📝 Notes</h3>
                 <p>Latest: “{latestNote || "No notes yet"}”</p>
               </div>
 
-              {/* 🎧 Focus Music */}
-              <div className="card music-card">
-                <h3>🎧 Focus Music</h3>
-                <p>Lo-fi Chill Beats</p>
-                <button className="music-btn">▶️ Play</button>
-              </div>
+            
             </div>
           </div>
         )}
@@ -165,12 +158,6 @@ const Dashboard = () => {
         {tab === "habits" && <Habits />}
         {tab === "notes" && <Notes />}
         {tab === "todo" && <Todo />}
-        {tab === "music" && (
-          <div className="music-section">
-            <h2>🎶 Focus Music</h2>
-            <p>This is where your music player will go.</p>
-          </div>
-        )}
       </div>
     </div>
   );

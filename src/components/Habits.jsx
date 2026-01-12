@@ -10,6 +10,23 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
+import {
+  FaBrain,
+  FaPlus,
+  FaTrash,
+  FaEdit,
+  FaCheck,
+  FaTimes,
+  FaSave,
+  FaCalendarAlt,
+  FaBullseye,
+  FaExclamationTriangle,
+  FaFire,
+  FaSync,
+  FaEllipsisV,
+  FaMedal
+} from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 import "./Habits.css";
 
 
@@ -74,8 +91,10 @@ const Habits = () => {
 
   // 🟡 3. Delete habit
   const handleDeleteHabit = async (id) => {
-    const ref = doc(db, "habits", currentUser.uid, "userHabits", id);
-    await deleteDoc(ref);
+    if (window.confirm("Delete this habit?")) {
+      const ref = doc(db, "habits", currentUser.uid, "userHabits", id);
+      await deleteDoc(ref);
+    }
   };
 
   // 🟡 4. Mark habit as failed
@@ -129,154 +148,144 @@ const Habits = () => {
   if (!currentUser) return <p>Loading your habits...</p>;
 
   return (
-    <div className="habit-wrapper">
-      <h2 className="hel">🧠 Habit Tracker</h2>
-
-      {showDonePopup && (
-        <div className="popup-success">✅ Habit marked as done for today!</div>
-      )}
-
-      <div className="add-habit-box">
-        <h3>➕ Add a New Habit</h3>
-
-        <input
-          type="text"
-          placeholder="e.g., Study"
-          value={newHabit.name}
-          onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
-          className="habit-input"
-        />
-
-        <input
-          type="date"
-          value={newHabit.startDate}
-          onChange={(e) =>
-            setNewHabit({ ...newHabit, startDate: e.target.value })
-          }
-          className="habit-input"
-        />
-
-        <input
-          type="text"
-          placeholder="e.g., Study 5 hours daily"
-          value={newHabit.goal}
-          onChange={(e) => setNewHabit({ ...newHabit, goal: e.target.value })}
-          className="habit-input"
-        />
-
-        <select
-          value={newHabit.frequency}
-          onChange={(e) =>
-            setNewHabit({ ...newHabit, frequency: e.target.value })
-          }
-          className="habit-select"
-        >
-          <option value="daily">Daily</option>
-          <option value="custom">Custom (Coming soon)</option>
-        </select>
-
-        <button className="submit-habit-btn" onClick={handleAddHabit}>
-          Add Habit
-        </button>
+    <div className="habit-container">
+      <div className="habit-header">
+        <div className="header-left">
+          <FaBrain className="header-icon" />
+          <h2>Habits</h2>
+        </div>
       </div>
 
-      <div className="habit-cards">
-        {habits.map((habit) => (
-          <div
-            key={habit.id}
-            className={`habit-card ${
-              habit.status === "inactive" ? "inactive" : ""
-            }`}
+      <AnimatePresence>
+        {showDonePopup && (
+          <motion.div
+            className="popup-success"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
           >
-            {editingId === habit.id ? (
-              <div className="edit-form">
-                <input
-                  type="text"
-                  value={editedHabit.name}
-                  onChange={(e) =>
-                    setEditedHabit({ ...editedHabit, name: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editedHabit.goal}
-                  onChange={(e) =>
-                    setEditedHabit({ ...editedHabit, goal: e.target.value })
-                  }
-                />
-                <select
-                  value={editedHabit.frequency}
-                  onChange={(e) =>
-                    setEditedHabit({
-                      ...editedHabit,
-                      frequency: e.target.value,
-                    })
-                  }
-                >
-                  <option value="daily">Daily</option>
-                  <option value="custom">Custom</option>
-                </select>
-                <button onClick={saveEditedHabit}>💾 Save</button>
-                <button onClick={() => setEditingId(null)}>❌ Cancel</button>
-              </div>
-            ) : (
-              <>
-                <h3>{habit.name}</h3>
-                <p>🎯 {habit.goal}</p>
-                <p>📅 Start: {habit.startDate}</p>
-                <p>🔁 Frequency: {habit.frequency}</p>
-                <p>🔥 Streak: {habit.streak || 0} day(s)</p>
+            <FaCheck /> Great job! Habit completed.
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-                {habit.status === "active" && (
-                  <div className="card-buttons">
-                    <button
-                      className="done-btn"
-                      onClick={() =>
-                        handleDoneHabit(
-                          habit.id,
-                          habit.streak || 0,
-                          habit.lastMarkedDate || ""
-                        )
-                      }
-                    >
-                      ✅ Done for Today
-                    </button>
-                    <button
-                      className="edit-btn"
-                      onClick={() => handleEditHabit(habit)}
-                    >
-                      🖊 Edit
-                    </button>
-                    <button
-                      className="fail-btn"
-                      onClick={() => handleFailHabit(habit.id)}
-                    >
-                      ⚠️ Fail to Continue
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDeleteHabit(habit.id)}
-                    >
-                      🗑 Delete
-                    </button>
-                  </div>
-                )}
-
-                {habit.status === "inactive" && (
-                  <div>
-                    <p className="inactive-text">❌ Marked as Inactive</p>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDeleteHabit(habit.id)}
-                    >
-                      🗑 Delete
-                    </button>
-                  </div>
-                )}
-              </>
-            )}
+      <div className="habits-layout">
+        {/* Add Habit Side (or Top) */}
+        <motion.div
+          className="add-habit-panel"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <h3><FaPlus className="small-icon" /> New Routine</h3>
+          <div className="add-habit-form">
+            <input
+              type="text"
+              placeholder="Habit Name"
+              value={newHabit.name}
+              onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
+              className="modern-input"
+            />
+            <input
+              type="text"
+              placeholder="Goal (e.g. 30 mins)"
+              value={newHabit.goal}
+              onChange={(e) => setNewHabit({ ...newHabit, goal: e.target.value })}
+              className="modern-input"
+            />
+            <div className="row-inputs">
+              <input
+                type="date"
+                value={newHabit.startDate}
+                onChange={(e) =>
+                  setNewHabit({ ...newHabit, startDate: e.target.value })
+                }
+                className="modern-input"
+              />
+              <select
+                value={newHabit.frequency}
+                onChange={(e) =>
+                  setNewHabit({ ...newHabit, frequency: e.target.value })
+                }
+                className="modern-select"
+              >
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+            <button className="create-habit-btn" onClick={handleAddHabit}>
+              Start Journey
+            </button>
           </div>
-        ))}
+        </motion.div>
+
+        <div className="habits-list-section">
+          <AnimatePresence mode="popLayout">
+            {habits.map((habit, index) => (
+              <motion.div
+                key={habit.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ delay: index * 0.05 }}
+                className={`modern-habit-card ${habit.status === 'inactive' ? 'inactive' : ''}`}
+              >
+                {editingId === habit.id ? (
+                  <div className="edit-mode-inline">
+                    <input
+                      value={editedHabit.name}
+                      onChange={(e) => setEditedHabit({ ...editedHabit, name: e.target.value })}
+                      className="modern-input compact"
+                    />
+                    <div className="edit-actions">
+                      <button onClick={saveEditedHabit} className="save-btn-sm"><FaCheck /></button>
+                      <button onClick={() => setEditingId(null)} className="cancel-btn-sm"><FaTimes /></button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="card-left">
+                      <div className="icon-box">
+                        <FaMedal />
+                      </div>
+                      <div className="habit-info">
+                        <h3>{habit.name}</h3>
+                        <span className="habit-goal">{habit.goal} • {habit.frequency}</span>
+                      </div>
+                    </div>
+
+                    <div className="card-right">
+                      <div className="streak-display">
+                        <FaFire className={habit.streak > 0 ? "lit" : ""} />
+                        <span>{habit.streak}</span>
+                      </div>
+
+                      {habit.status === 'active' && (
+                        <button
+                          className="check-in-btn"
+                          onClick={() => handleDoneHabit(habit.id, habit.streak || 0, habit.lastMarkedDate || "")}
+                          title="Mark Done"
+                        >
+                          <FaCheck />
+                        </button>
+                      )}
+
+                      <div className="menu-actions">
+                        <button className="menu-btn" onClick={() => handleEditHabit(habit)}><FaEdit /></button>
+                        <button className="menu-btn delete" onClick={() => handleDeleteHabit(habit.id)}><FaTrash /></button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {habits.length === 0 && (
+            <div className="empty-habits">
+              <p>No habits yet. Define your goals!</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

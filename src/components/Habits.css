@@ -1,187 +1,232 @@
-.habit-wrapper {
-    color: white;
-    padding: 2rem;
-  }
-  .hel{
-    color: #115f81;
-  }
-  
-  .add-habit-box {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-  }
-  
-  .habit-input, .habit-select {
-    display: block;
-    margin: 0.5rem 0;
-    padding: 0.6rem;
-    width: 100%;
-    border-radius: 6px;
-    border: none;
-    background: #222;
-    color: white;
-  }
-  
-  .submit-habit-btn {
-    margin-top: 1rem;
-    padding: 0.6rem 1rem;
-    background: #2f5d88;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .habit-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-  
-  .habit-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #2f5d88;
-    padding: 1rem;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-  }
-  
-  .habit-card.inactive {
-    opacity: 0.5;
-    text-decoration: line-through;
-  }
-  
-.card-buttons {
+/* Habits.css */
+.habit-container {
+  height: 100%;
   display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  flex-direction: column;
 }
 
-  
-  .card-buttons button {
-    padding: 0.4rem;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .done-btn {
-    background: #3cb371;
-    color: white;
-  }
-  
-  .delete-btn {
-    background: #c0392b;
-    color: white;
-  }
-  
-  .fail-btn {
-    background: #e67e22;
-    color: white;
-  }
-  
-  .inactive-text {
-    font-style: italic;
-    color: #ccc;
-    margin-top: 0.5rem;
-  }
-  .edit-form {
-    display: flex;
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.habits-layout {
+  display: flex;
+  gap: 2rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Panel */
+.add-habit-panel {
+  width: 300px;
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  height: fit-content;
+}
+
+.add-habit-panel h3 {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.add-habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modern-input,
+.modern-select {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.modern-input:focus,
+.modern-select:focus {
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.row-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.row-inputs>* {
+  flex: 1;
+}
+
+.create-habit-btn {
+  margin-top: 10px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.create-habit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+/* List */
+.habits-list-section {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.modern-habit-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  padding: 1.2rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s;
+}
+
+.modern-habit-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+}
+
+.habit-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.habit-goal {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.card-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.streak-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.streak-display .lit {
+  color: var(--accent-orange);
+}
+
+.check-in-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(20, 184, 166, 0.15);
+  color: var(--accent-teal);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.check-in-btn:hover {
+  background: var(--accent-teal);
+  color: white;
+  transform: scale(1.1);
+}
+
+.menu-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.menu-btn.delete:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.menu-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.popup-success {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--accent-teal);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+}
+
+@media (max-width: 900px) {
+  .habits-layout {
     flex-direction: column;
-    gap: 0.8rem;
-    padding: 1rem;
-    border: 2px solid #2f5d88;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 0 10px rgba(47, 93, 136, 0.3);
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  .edit-form input,
-  .edit-form select {
-    padding: 0.6rem;
-    font-size: 0.95rem;
-    border-radius: 6px;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    border: 1px solid #444;
-    outline: none;
-  }
-  
-  .edit-form input:focus,
-  .edit-form select:focus {
-    border-color: #2f5d88;
-    box-shadow: 0 0 5px #2f5d88;
-  }
-  
-  .edit-form button {
-    padding: 0.45rem 1rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .edit-form button:first-of-type {
-    background-color: #2f5d88;
-    color: white;
-  }
-  
-  .edit-form button:last-of-type {
-    background-color: #444;
-    color: white;
-  }
-  
-  .edit-form button:hover {
-    opacity: 0.85;
-  }
-  
-
-
-@media screen and (max-width: 768px) {
-  .habit-wrapper {
-    width: 240px;
-    padding: 1rem;
-  }
-  .hel{
-    font-size: 1.3rem;
   }
 
-  .habit-input, .habit-select {
-    font-size: 0.8rem;
-  }
-
-  .submit-habit-btn {
+  .add-habit-panel {
     width: 100%;
-  }
-
-  .card-buttons {
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .habit-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .edit-form {
-    padding: 0.8rem;
-  }
-
-  .edit-form input,
-  .edit-form select {
-    font-size: 0.85rem;
-  }
-
-  .edit-form button {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.8rem;
   }
 }

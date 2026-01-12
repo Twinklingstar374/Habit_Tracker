@@ -1,0 +1,269 @@
+/* FocusTimer.css */
+
+.focus-timer-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    overflow: hidden;
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.focus-timer-container.focus {
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.focus-timer-container.break {
+    border-bottom: 2px solid var(--accent-teal);
+}
+
+/* Minimized State */
+/* Minimized State (FAB) */
+.focus-timer-container.minimized {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-primary);
+    box-shadow: 0 5px 20px rgba(42, 137, 220, 0.4);
+    border: none;
+}
+
+.focus-timer-container.minimized:hover {
+    transform: scale(1.1);
+}
+
+.mini-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.fab-icon {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.fab-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+/* Expanded State */
+.focus-timer-container.expanded {
+    width: 280px;
+    padding: 20px;
+}
+
+.timer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.mode-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.focus-timer-container.focus .mode-indicator {
+    color: var(--accent-primary);
+}
+
+.focus-timer-container.break .mode-indicator {
+    color: var(--accent-teal);
+}
+
+.minimize-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.minimize-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Circular Timer */
+.circular-timer {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+}
+
+.timer-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 6;
+}
+
+.timer-progress {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s;
+}
+
+.focus-timer-container.focus .timer-progress {
+    stroke: var(--accent-primary);
+}
+
+.focus-timer-container.break .timer-progress {
+    stroke: var(--accent-teal);
+}
+
+.time-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    font-family: monospace;
+}
+
+.time-adjust-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
+    z-index: 10;
+}
+
+.adjust-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+}
+
+.adjust-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Controls */
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.control-btn {
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.control-btn.main {
+    width: 56px;
+    height: 56px;
+    font-size: 1.2rem;
+    background: white;
+    color: var(--bg-dark);
+}
+
+.control-btn.main:hover {
+    transform: scale(1.1);
+    background: #f0f0f0;
+}
+
+.control-btn.secondary {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.control-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Mode Switcher */
+.mode-switcher {
+    display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.mode-switcher button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mode-switcher button.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 600;
+}
+
+/* Responsive Position */
+@media (max-width: 768px) {
+    .focus-timer-container {
+        bottom: 80px;
+        /* Above bottom nav if applicable or just higher */
+        right: 20px;
+    }
+}
